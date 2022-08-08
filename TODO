@@ -1,0 +1,10 @@
+# FoxKit TODO
+- Update row in postgres
+    - maybe find data using table struct?
+- session validation wrapper that does error checking
+- make it possible to re-use password hash on password update
+- make a function for securely compare keys -> constant time compare
+- function for getting a row easily that contain some data
+- session remove / info functions + gin wrapper
+- PG delete row
+- PG update row
