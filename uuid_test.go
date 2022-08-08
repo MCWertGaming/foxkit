@@ -7,15 +7,15 @@ import (
 
 // test if UUID generation works
 func TestUUID(t *testing.T) {
-	uuid := getUUID()
+	uuid := GetUUID()
 	if strings.Count(uuid, "") != 37 {
 		t.Errorf("UUID not 37 characters long, instead %d", strings.Count(uuid, ""))
 	}
 }
 
 func TestUUIDPool(t *testing.T) {
-	setupUUID()
-	uuid := getUUID()
+	SetupUUID()
+	uuid := GetUUID()
 
 	if strings.Count(uuid, "") != 37 {
 		t.Errorf("UUID not 37 characters long, instead %d", strings.Count(uuid, ""))

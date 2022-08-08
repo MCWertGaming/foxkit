@@ -20,19 +20,19 @@ func ConfigRouter(router *gin.Engine, trustedProxy []string) {
 }
 
 // returns a static health message
-func getHealth(c *gin.Context) {
+func GetHealth(c *gin.Context) {
 	c.Data(http.StatusOK, "application/json", []byte(`{"status":"ok"}`))
 }
 
 // redirects to the given url
-func redirect(url string) gin.HandlerFunc {
+func Redirect(url string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Redirect(http.StatusPermanentRedirect, url)
 	}
 }
 
 // starts the router on the given IP and port
-func startRouter(router *gin.Engine, bind string) {
+func StartRouter(router *gin.Engine, bind string) {
 	if err := router.Run(bind); err != nil {
 		ErrorFatal("FoxKit", err)
 	}
@@ -49,7 +49,7 @@ func JsonRequested(c *gin.Context, appName string) bool {
 }
 
 // bind the received json to the given struct, sets the status to 400 if false
-func bindJson(c *gin.Context, inf *interface{}, appName string) bool {
+func BindJson(c *gin.Context, inf *interface{}, appName string) bool {
 	if err := c.BindJSON(&inf); err != nil {
 		c.AbortWithStatus(http.StatusBadRequest)
 		LogError(appName, err)
@@ -59,7 +59,7 @@ func bindJson(c *gin.Context, inf *interface{}, appName string) bool {
 }
 
 // returns true if an error happened, sets the status to 500 if true
-func checkError(c *gin.Context, err *error, appName string) bool {
+func CheckError(c *gin.Context, err *error, appName string) bool {
 	if *err != nil {
 		c.AbortWithStatus(http.StatusInternalServerError)
 		LogError(appName, *err)

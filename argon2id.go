@@ -45,7 +45,7 @@ func CreateHash(password *string) (string, error) {
 
 	return fmt.Sprintf("$argon2id$v=%d$m=%d,t=%d,p=%d$%s$%s", argon2.Version, hashMemory, hashIterations, hashParallelism, saltEncoded, keyEncoded), nil
 }
-func decodeHash(encodedHash *string) (params usedHashParams, err error) {
+func DecodeHash(encodedHash *string) (params usedHashParams, err error) {
 	// split the hash into it's parameters
 	vals := strings.Split(*encodedHash, "$")
 	if len(vals) != 6 {
@@ -88,7 +88,7 @@ func decodeHash(encodedHash *string) (params usedHashParams, err error) {
 
 func ComparePasswordAndHash(password, encodedHash *string) (match bool, err error) {
 	// decode the given hash
-	params, err := decodeHash(encodedHash)
+	params, err := DecodeHash(encodedHash)
 	if err != nil {
 		return false, err
 	}
