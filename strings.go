@@ -6,7 +6,7 @@ import (
 )
 
 // returns true if the string matches the given schema
-func CheckString(testString string, minLength, maxLength uint8, asciiOnly bool) bool {
+func CheckString(testString string, minLength, maxLength uint32, asciiOnly bool) bool {
 	if strings.Count(testString, "") > int(maxLength+1) || strings.Count(testString, "") < int(minLength+1) {
 		return false
 	} else if asciiOnly && !IsASCII((testString)) {
