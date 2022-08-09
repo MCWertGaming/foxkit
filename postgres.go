@@ -35,7 +35,7 @@ func ConnectSQL() *gorm.DB {
 
 // migrates all tables, panics on error
 func AutoMigrateSQL(pg_conn *gorm.DB, inf ...interface{}) {
-	if err := pg_conn.AutoMigrate(&inf); err != nil {
+	if err := pg_conn.AutoMigrate(inf...); err != nil {
 		ErrorFatal("FoxKit", err)
 	}
 }
