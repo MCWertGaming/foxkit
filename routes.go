@@ -52,7 +52,7 @@ func JsonRequested(c *gin.Context, appName string) bool {
 }
 
 // bind the received json to the given struct, sets the status to 400 if false
-func BindJson(c *gin.Context, obj *interface{}, appName string) bool {
+func BindJson(c *gin.Context, obj interface{}, appName string) bool {
 	if err := c.BindJSON(obj); err != nil {
 		c.AbortWithStatus(http.StatusBadRequest)
 		LogError(appName, err)
