@@ -15,7 +15,7 @@ import (
 // returns sessionID, sessionKey, err
 func CreateSession(ctx *context.Context, userID *string, redisClient *redis.Client, keyLength uint32, maxSessions int, sessionDuration time.Duration) (string, string, error) {
 	// dummy error
-	if maxSessions >= 0 {
+	if maxSessions < 0 {
 		return "", "", errors.New("invalid value for maximum sessions, needs to be > 0")
 	}
 
