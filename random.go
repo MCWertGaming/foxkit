@@ -2,6 +2,7 @@ package foxkit
 
 import (
 	"crypto/rand"
+	"crypto/subtle"
 	"encoding/base64"
 )
 
@@ -17,4 +18,21 @@ func RandomString(length uint32) (string, error) {
 		return "", err
 	}
 	return base64.RawStdEncoding.EncodeToString(raw), nil
+}
+
+func RandomStringCompare(stringOne, stringTwo *string) (bool, error) {
+	// encode both strings
+	stringOneDec, err := base64.RawStdEncoding.DecodeString(*stringOne)
+	if err != nil {
+		return false, err
+	}
+	stringTwoDec, err := base64.RawStdEncoding.DecodeString(*stringOne)
+	if err != nil {
+		return false, err
+	}
+	// securely compare both strings
+	if subtle.ConstantTimeCompare(stringOneDec, stringTwoDec) != 1 {
+		return false, nil
+	}
+	return true, nil
 }
