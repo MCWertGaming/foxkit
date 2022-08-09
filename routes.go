@@ -1,10 +1,13 @@
 package foxkit
 
 import (
+	"context"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/go-redis/redis/v9"
 )
 
 // configures the Trusted proxies list
@@ -66,4 +69,47 @@ func CheckError(c *gin.Context, err *error, appName string) bool {
 		return true
 	}
 	return false
+}
+
+// checks if the password matches the hash, sets the HTTP code to 500 on DB failure / 401 if the password is wrong
+func CheckPassword(c *gin.Context, hash, password *string) bool {
+	match, err := ComparePasswordAndHash(password, hash)
+	if CheckError(c, &err, "FoxKit") {
+		return false
+	} else if !match {
+		c.AbortWithStatus(http.StatusUnauthorized)
+		LogEvent("FoxKit", "loginUser(): Invalid password received")
+		return false
+	}
+	return true
+}
+
+// checks if the session is valid, sets the HTTP code to 500 on DB error / 401 on non-valid if false
+func CheckSession(ctx *context.Context, c *gin.Context, userID, token *string, redisClient *redis.Client, sessionTime time.Duration) bool {
+	valid, err := ValidateSession(ctx, userID, token, redisClient, sessionTime)
+	if CheckError(c, &err, "FoxKit") {
+		c.AbortWithStatus(http.StatusInternalServerError)
+		LogError("FoxKit", err)
+		return false
+	} else if !valid {
+		c.AbortWithStatus(http.StatusUnauthorized)
+		LogEvent("FoxKit", "Received invalid session")
+		return false
+	}
+	return true
+}
+
+// checks if both token match, sets the HTTP code to 400 on encoding failure / 401 on token miss match
+func CheckToken(c *gin.Context, stringOne, stringTwo *string) bool {
+	match, err := RandomStringCompare(stringOne, stringTwo)
+	if err != nil {
+		c.AbortWithStatus(http.StatusBadRequest)
+		LogError("FoxKit", err)
+		return false
+	} else if !match {
+		c.AbortWithStatus(http.StatusUnauthorized)
+		LogEvent("FoxKit", "Received invalid Token")
+		return false
+	}
+	return true
 }
