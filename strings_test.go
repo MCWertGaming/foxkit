@@ -30,9 +30,9 @@ func TestCheckString(t *testing.T) {
 		t.Error("unicode allowed test failed")
 	} else if CheckString("A unicode char: ♔", 3, 20, true) { // detect unicode
 		t.Error("unicode was not detected")
-	} else if !CheckString("Die gestielten Blüten der Apfelbäume stehen einzeln oder in doldigen schirmrispigen Blütenständen.", 10, 60, false) {
+	} else if !CheckString("Die gestielten Blüten der Apfelbäume stehen einzeln oder in doldigen schirmrispigen Blütenständen.", 10, 100, false) {
 		t.Error("unicode was not allowed in german sentence")
-	} else if CheckString("Die gestielten Blüten der Apfelbäume stehen einzeln oder in doldigen schirmrispigen Blütenständen.", 10, 60, true) {
+	} else if CheckString("Die gestielten Blüten der Apfelbäume stehen einzeln oder in doldigen schirmrispigen Blütenständen.", 10, 100, true) {
 		t.Error("unicode was not detected in german sentence")
 	}
 }
