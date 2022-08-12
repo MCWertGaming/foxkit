@@ -26,7 +26,7 @@ func RandomStringCompare(stringOne, stringTwo *string) (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	stringTwoDec, err := base64.RawStdEncoding.DecodeString(*stringOne)
+	stringTwoDec, err := base64.RawStdEncoding.DecodeString(*stringTwo)
 	if err != nil {
 		return false, err
 	}
