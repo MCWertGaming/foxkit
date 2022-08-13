@@ -113,3 +113,20 @@ func CheckToken(c *gin.Context, stringOne, stringTwo *string) bool {
 	}
 	return true
 }
+
+// validates the captcha and returns (valid, error) when error is true, http code is set to 500
+func ValidateCaptcha(c *gin.Context, secret, response *string, hostname string, maxAge time.Duration) (bool, bool) {
+	var captcha HCaptchaResponse
+	err := captcha.Get(secret, response)
+	if CheckError(c, &err, "FoxKit") {
+		return false, true
+	}
+	valid, err := captcha.Valid(hostname, maxAge)
+	if err != nil {
+		// the error is caused by a bad request
+		LogEvent("FoxKit", err.Error())
+		return false, false
+	}
+
+	return valid, false
+}

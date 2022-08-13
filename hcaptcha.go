@@ -17,26 +17,33 @@ type HCaptchaResponse struct {
 	ErrorCode   []string  `json:"error-codes"`
 }
 
-func HCaptchaValid(secret, response *string, hostname string, validFor time.Duration) (bool, error) {
+// retrieves the HCaptcha response
+func (hresp *HCaptchaResponse) Get(secret, response *string) error {
 	// get response from hcaptcha
 	resp, err := http.Post("https://hcaptcha.com/siteverify", "application/x-www-form-urlencoded; charset=utf-8", strings.NewReader(fmt.Sprintf("secret=%s&response=%s", *secret, *response)))
 	if err != nil {
-		return false, err
+		return err
 	}
 	defer resp.Body.Close()
 
 	// parse response body
 	bodyBytes, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return false, err
+		return err
 	}
 
 	// put response into struct
-	var captcha HCaptchaResponse
-	err = json.Unmarshal([]byte(bodyBytes), &captcha)
+	err = json.Unmarshal([]byte(bodyBytes), &hresp)
 	if err != nil {
-		return false, err
+		return err
 	}
+
+	// everything worked
+	return nil
+}
+
+// checks if the hcaptcha response is valid, returns error if the response is invalid
+func (captcha *HCaptchaResponse) Valid(hostname string, validFor time.Duration) (bool, error) {
 
 	// check response
 	if !captcha.Success {
