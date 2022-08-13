@@ -2,6 +2,7 @@ package foxkit
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"os"
 	"time"
@@ -129,4 +130,18 @@ func ValidateCaptcha(c *gin.Context, secret, response *string, hostname string, 
 	}
 
 	return valid, false
+}
+
+// checks the string and generates an error message
+func CheckStringR(parameter *string, paramName string, minLength, maxLength uint32, asciiOnly bool) (bool, string) {
+	minSize, maxSize, ascii := CheckStringFull(*parameter, minLength, maxLength)
+	if !minSize {
+		return false, fmt.Sprintf("%s too small, must be longer than %d characters", paramName, minLength)
+	} else if !maxSize {
+		return false, fmt.Sprintf("%s too long, must be smaller than %d characters", paramName, maxLength)
+	} else if asciiOnly && !ascii {
+		return false, fmt.Sprintf("%s contains invalid characters", paramName)
+	}
+	// everything is ok
+	return true, ""
 }
