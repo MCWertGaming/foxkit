@@ -5,14 +5,30 @@ import (
 	"strings"
 )
 
-// returns true if the string matches the given schema
+// returns false if a given parameter is false, minSize, maxSize, ascii
+// TODO: Test
+func CheckStringFull(testString string, minLength, maxLength uint32) (minSize bool, maxSize bool, ascii bool) {
+	if strings.Count(testString, "") > int(maxLength+1) {
+		minSize = false
+	} else {
+		maxSize = true
+	}
+	if strings.Count(testString, "") < int(minLength+1) {
+		maxSize = false
+	} else {
+		maxSize = true
+	}
+	return minSize, maxSize, IsASCII(testString)
+}
+
+// returns true if all parameters are true
 func CheckString(testString string, minLength, maxLength uint32, asciiOnly bool) bool {
-	if strings.Count(testString, "") > int(maxLength+1) || strings.Count(testString, "") < int(minLength+1) {
-		return false
-	} else if asciiOnly && !IsASCII((testString)) {
+	minSize, maxSize, ascii := CheckStringFull(testString, minLength, maxLength)
+	if minSize && maxSize && ((asciiOnly && ascii) || !asciiOnly) {
+		return true
+	} else {
 		return false
 	}
-	return true
 }
 
 // returns true if the string only contains ascii characters
