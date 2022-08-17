@@ -11,7 +11,7 @@ func CheckStringFull(testString string, minLength, maxLength uint32) (minSize bo
 	if strings.Count(testString, "") > int(maxLength+1) {
 		minSize = false
 	} else {
-		maxSize = true
+		minSize = true
 	}
 	if strings.Count(testString, "") < int(minLength+1) {
 		maxSize = false
