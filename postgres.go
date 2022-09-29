@@ -61,14 +61,13 @@ func UpdateDB(c *gin.Context, pg_conn *gorm.DB, inf interface{}, condition inter
 }
 
 // Finds and Returns true with the Data Entry or false if not found
-func FindDB(c *gin.Context, pg_conn *gorm.DB, inf interface{}, condition interface{}) (bool, interface{}) {
-	data := pg_conn.Where(condition).First(inf)
-	if data.Error != nil {
-		c.AbortWithStatus(http.StatusInternalServerError)
-		LogError("FoxKit", data.Error)
-		return false, nil
+func FindDB(c *gin.Context, pg_conn *gorm.DB, inf interface{}, condition interface{}) bool {
+	if err := pg_conn.Where(condition).First(inf).Error; err != nil {
+		c.AbortWithStatus(http.StatusNotFound)
+		LogError("FoxKit", err)
+		return false
 	}
-	return true, data
+	return true
 }
 
 // Deletes Data Entry with condition
