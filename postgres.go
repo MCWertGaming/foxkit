@@ -40,9 +40,44 @@ func AutoMigrateSQL(pg_conn *gorm.DB, inf ...interface{}) {
 	}
 }
 
-// tried to push the data into the DB table, sets status to 500 if false
+// tries to push the data into the DB table, sets status to 500 if false
 func StoreDB(c *gin.Context, pg_conn *gorm.DB, inf interface{}) bool {
 	if err := pg_conn.Create(&inf).Error; err != nil {
+		c.AbortWithStatus(http.StatusInternalServerError)
+		LogError("FoxKit", err)
+		return false
+	}
+	return true
+}
+
+// Finds Data Entry with condition and updates it with new data
+func UpdateDB(c *gin.Context, pg_conn *gorm.DB, inf interface{}, condition interface{}) bool {
+	if err := pg_conn.Where(condition).Updates(inf).Error; err != nil {
+		c.AbortWithStatus(http.StatusInternalServerError)
+		LogError("FoxKit", err)
+		return false
+	}
+	return true
+}
+
+// Finds and Returns true with the Data Entry or false if not found
+func FindDB(c *gin.Context, pg_conn *gorm.DB, inf interface{}, condition interface{}) bool {
+	err := pg_conn.Where(condition).First(inf).Error
+	if err == gorm.ErrRecordNotFound {
+		c.AbortWithStatus(http.StatusNotFound)
+		LogError("FoxKit", err)
+		return false
+	} else if err != nil {
+		c.AbortWithStatus(http.StatusInternalServerError)
+		LogError("FoxKit", err)
+		return false
+	}
+	return true
+}
+
+// Deletes Data Entry with condition
+func DeleteDB(c *gin.Context, pg_conn *gorm.DB, inf interface{}, condition interface{}) bool {
+	if err := pg_conn.Where(condition).Delete(inf).Error; err != nil {
 		c.AbortWithStatus(http.StatusInternalServerError)
 		LogError("FoxKit", err)
 		return false
