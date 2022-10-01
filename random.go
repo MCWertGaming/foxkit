@@ -20,8 +20,9 @@ func RandomString(length uint32) (string, error) {
 	return base64.RawStdEncoding.EncodeToString(raw), nil
 }
 
+// decodes the strings and cryptographically compares them, returns true if they match
 func RandomStringCompare(stringOne, stringTwo *string) (bool, error) {
-	// encode both strings
+	// decode both strings
 	stringOneDec, err := base64.RawStdEncoding.DecodeString(*stringOne)
 	if err != nil {
 		return false, err
