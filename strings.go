@@ -9,14 +9,14 @@ import (
 // TODO: Test
 func CheckStringFull(testString string, minLength, maxLength uint32) (minSize bool, maxSize bool, ascii bool) {
 	if strings.Count(testString, "") > int(maxLength+1) {
-		minSize = false
-	} else {
-		minSize = true
-	}
-	if strings.Count(testString, "") < int(minLength+1) {
 		maxSize = false
 	} else {
 		maxSize = true
+	}
+	if strings.Count(testString, "") < int(minLength+1) {
+		minSize = false
+	} else {
+		minSize = true
 	}
 	return minSize, maxSize, IsASCII(testString)
 }
