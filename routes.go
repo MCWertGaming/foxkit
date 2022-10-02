@@ -140,7 +140,7 @@ func CheckStringR(parameter *string, paramName string, minLength, maxLength uint
 	} else if !maxSize {
 		return false, fmt.Sprintf("%s too long, must be smaller than %d characters", paramName, maxLength)
 	} else if asciiOnly && !ascii {
-		return false, fmt.Sprintf("%s contains invalid characters", paramName)
+		return false, fmt.Sprintf("%s contains invalid characters, only ascii characters are allowed", paramName)
 	}
 	// everything is ok
 	return true, ""
