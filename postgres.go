@@ -50,7 +50,7 @@ func StoreDB(c *gin.Context, pg_conn *gorm.DB, inf interface{}) bool {
 	return true
 }
 
-// Finds Data Entry with condition and updates it with new data
+// Finds Data Entry with condition and updates it with new data, sets status to 500 if false
 func UpdateDB(c *gin.Context, pg_conn *gorm.DB, inf interface{}, condition interface{}) bool {
 	if err := pg_conn.Where(condition).Updates(inf).Error; err != nil {
 		c.AbortWithStatus(http.StatusInternalServerError)
@@ -60,8 +60,8 @@ func UpdateDB(c *gin.Context, pg_conn *gorm.DB, inf interface{}, condition inter
 	return true
 }
 
-// Finds and Returns true with the Data Entry or false if not found
-func FindDB(c *gin.Context, pg_conn *gorm.DB, inf interface{}, condition interface{}) bool {
+// Finds and Returns true with the Data Entry or false if not found, sets status to 500 (error) or 404 (not found) if false
+func GetDB(c *gin.Context, pg_conn *gorm.DB, inf interface{}, condition interface{}) bool {
 	err := pg_conn.Where(condition).First(inf).Error
 	if err == gorm.ErrRecordNotFound {
 		c.AbortWithStatus(http.StatusNotFound)
