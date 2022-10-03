@@ -51,7 +51,7 @@ func StoreDB(c *gin.Context, pg_conn *gorm.DB, inf interface{}) bool {
 }
 
 // Finds Data Entry with condition and updates it with new data, sets status to 500 if false
-func UpdateDB(c *gin.Context, pg_conn *gorm.DB, inf interface{}, condition interface{}) bool {
+func UpdateDB(c *gin.Context, pg_conn *gorm.DB, condition interface{}, inf interface{}) bool {
 	if err := pg_conn.Where(condition).Updates(inf).Error; err != nil {
 		c.AbortWithStatus(http.StatusInternalServerError)
 		LogError("FoxKit", err)
@@ -61,7 +61,7 @@ func UpdateDB(c *gin.Context, pg_conn *gorm.DB, inf interface{}, condition inter
 }
 
 // Finds and Returns true with the Data Entry or false if not found, sets status to 500 (error) or 404 (not found) if false
-func GetDB(c *gin.Context, pg_conn *gorm.DB, inf interface{}, condition interface{}) bool {
+func GetDB(c *gin.Context, pg_conn *gorm.DB, condition interface{}, inf interface{}) bool {
 	err := pg_conn.Where(condition).First(inf).Error
 	if err == gorm.ErrRecordNotFound {
 		c.AbortWithStatus(http.StatusNotFound)
@@ -76,7 +76,7 @@ func GetDB(c *gin.Context, pg_conn *gorm.DB, inf interface{}, condition interfac
 }
 
 // returns true if an entry for the given condition exists
-func ExistsDB(c *gin.Context, pg_conn *gorm.DB, inf interface{}, condition interface{}) (bool, error) {
+func ExistsDB(c *gin.Context, pg_conn *gorm.DB, condition interface{}, inf interface{}) (bool, error) {
 	resp := pg_conn.Where(condition).First(inf)
 	if resp.Error == gorm.ErrRecordNotFound {
 		return false, nil
@@ -87,7 +87,7 @@ func ExistsDB(c *gin.Context, pg_conn *gorm.DB, inf interface{}, condition inter
 }
 
 // Deletes Data Entry with condition
-func DeleteDB(c *gin.Context, pg_conn *gorm.DB, inf interface{}, condition interface{}) bool {
+func DeleteDB(c *gin.Context, pg_conn *gorm.DB, condition interface{}, inf interface{}) bool {
 	if err := pg_conn.Where(condition).Delete(inf).Error; err != nil {
 		c.AbortWithStatus(http.StatusInternalServerError)
 		LogError("FoxKit", err)
