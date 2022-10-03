@@ -75,6 +75,17 @@ func GetDB(c *gin.Context, pg_conn *gorm.DB, inf interface{}, condition interfac
 	return true
 }
 
+// returns true if an entry for the given condition exists
+func ExistsDB(c *gin.Context, pg_conn *gorm.DB, inf interface{}, condition interface{}) (bool, error) {
+	resp := pg_conn.Where(condition).First(inf)
+	if resp.Error == gorm.ErrRecordNotFound {
+		return false, nil
+	} else if resp.Error != nil {
+		return false, resp.Error
+	}
+	return true, nil
+}
+
 // Deletes Data Entry with condition
 func DeleteDB(c *gin.Context, pg_conn *gorm.DB, inf interface{}, condition interface{}) bool {
 	if err := pg_conn.Where(condition).Delete(inf).Error; err != nil {
