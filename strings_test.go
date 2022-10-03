@@ -36,3 +36,11 @@ func TestCheckString(t *testing.T) {
 		t.Error("unicode was not detected in german sentence")
 	}
 }
+
+func TestCheckEmail(t *testing.T) {
+	if !CheckEmail("test@example.invalid") {
+		t.Error("test@example.invalid not accepted")
+	} else if CheckEmail("") {
+		t.Error("Empty email field was allowed")
+	}
+}
