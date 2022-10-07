@@ -27,6 +27,12 @@ func ConfigRouter(router *gin.Engine, trustedProxy []string) {
 func GetHealth(c *gin.Context) {
 	c.Data(http.StatusOK, "application/json", []byte(`{"status":"ok"}`))
 }
+func ImTeaPot(c *gin.Context) {
+	c.String(http.StatusTeapot, "418 I'm a teapot")
+}
+func CoffeOut(c *gin.Context) {
+	c.Data(http.StatusServiceUnavailable, "application/json", []byte(`{"error":"true","message":"Temporary out of coffee, please try again later!"}`))
+}
 
 // redirects to the given url
 func Redirect(url string) gin.HandlerFunc {
