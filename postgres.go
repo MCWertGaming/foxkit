@@ -42,7 +42,7 @@ func AutoMigrateSQL(pg_conn *gorm.DB, inf ...interface{}) {
 
 // tries to push the data into the DB table, sets status to 500 if false
 func StoreDB(c *gin.Context, pg_conn *gorm.DB, inf interface{}) bool {
-	if err := pg_conn.Create(&inf).Error; err != nil {
+	if err := pg_conn.Create(inf).Error; err != nil {
 		c.AbortWithStatus(http.StatusInternalServerError)
 		LogError("FoxKit", err)
 		return false
