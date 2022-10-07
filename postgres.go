@@ -86,7 +86,7 @@ func ExistsDB(c *gin.Context, pg_conn *gorm.DB, condition interface{}, inf inter
 	return true, nil
 }
 
-// Deletes Data Entry with condition
+// Deletes Data Entry with condition, sets the status to 500 if false
 func DeleteDB(c *gin.Context, pg_conn *gorm.DB, condition interface{}, inf interface{}) bool {
 	if err := pg_conn.Where(condition).Delete(inf).Error; err != nil {
 		c.AbortWithStatus(http.StatusInternalServerError)
