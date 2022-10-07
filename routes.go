@@ -27,11 +27,20 @@ func ConfigRouter(router *gin.Engine, trustedProxy []string) {
 func GetHealth(c *gin.Context) {
 	c.Data(http.StatusOK, "application/json", []byte(`{"status":"ok"}`))
 }
+
+// returns that the server is not a teapot
 func ImTeaPot(c *gin.Context) {
-	c.String(http.StatusTeapot, "418 I'm a teapot")
+	c.String(http.StatusTeapot, "418: I'm a teapot")
 }
+
+// returns that the combined coffee/tea pot is temporarily out of coffee
 func CoffeOut(c *gin.Context) {
 	c.Data(http.StatusServiceUnavailable, "application/json", []byte(`{"error":"true","message":"Temporary out of coffee, please try again later!"}`))
+}
+
+// returns 204 for CORS
+func CORS(c *gin.Context) {
+	c.Status(http.StatusNoContent)
 }
 
 // redirects to the given url
