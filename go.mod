@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/gin-gonic/gin v1.8.1
-	github.com/go-redis/redis/v9 v9.0.0-beta.2
+	github.com/go-redis/redis/v9 v9.0.0-beta.3
 	github.com/google/uuid v1.3.0
 	golang.org/x/crypto v0.0.0-20220926161630-eccd6366d1be
 	gorm.io/driver/postgres v1.3.10
