@@ -6,9 +6,9 @@ require (
 	github.com/gin-gonic/gin v1.8.1
 	github.com/go-redis/redis/v9 v9.0.0-beta.3
 	github.com/google/uuid v1.3.0
-	golang.org/x/crypto v0.0.0-20220926161630-eccd6366d1be
-	gorm.io/driver/postgres v1.3.10
-	gorm.io/gorm v1.23.10
+	golang.org/x/crypto v0.0.0-20221005025214-4161e89ecf1b
+	gorm.io/driver/postgres v1.4.1
+	gorm.io/gorm v1.24.0
 )
 
 require (
@@ -36,8 +36,8 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.5 // indirect
 	github.com/ugorji/go/codec v1.2.7 // indirect
-	golang.org/x/net v0.0.0-20221002022538-bcab6841153b // indirect
-	golang.org/x/sys v0.0.0-20220928140112-f11e5e49a4ec // indirect
+	golang.org/x/net v0.0.0-20221004154528-8021a29435af // indirect
+	golang.org/x/sys v0.0.0-20221006211917-84dc82d7e875 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
