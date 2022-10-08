@@ -76,14 +76,28 @@ func GetDB(c *gin.Context, pg_conn *gorm.DB, condition interface{}, inf interfac
 }
 
 // returns true if an entry for the given condition exists
-func ExistsDB(c *gin.Context, pg_conn *gorm.DB, condition interface{}, inf interface{}) (bool, error) {
-	resp := pg_conn.Where(condition).First(inf)
-	if resp.Error == gorm.ErrRecordNotFound {
+func ExistsDB(c *gin.Context, pg_conn *gorm.DB, condition interface{}) (bool, error) {
+	var count int64
+	err := pg_conn.Where(condition).Count(&count).Error
+	if err != nil {
+		// error
+		return false, err
+	} else if count == 0 {
+		// doesn't exists
 		return false, nil
-	} else if resp.Error != nil {
-		return false, resp.Error
 	}
+	// exists
 	return true, nil
+}
+
+// returns the number of rows with the given condition
+func CountDB(c *gin.Context, pg_conn *gorm.DB, condition interface{}) (int64, error) {
+	var count int64
+	err := pg_conn.Where(condition).Count(&count).Error
+	if err != nil {
+		return 0, err
+	}
+	return count, nil
 }
 
 // Deletes Data Entry with condition, sets the status to 500 if false
