@@ -76,9 +76,9 @@ func GetDB(c *gin.Context, pg_conn *gorm.DB, condition interface{}, inf interfac
 }
 
 // returns true if an entry for the given condition exists
-func ExistsDB(c *gin.Context, pg_conn *gorm.DB, condition interface{}) (bool, error) {
+func ExistsDB(c *gin.Context, pg_conn *gorm.DB, model interface{}, condition interface{}) (bool, error) {
 	var count int64
-	err := pg_conn.Where(condition).Count(&count).Error
+	err := pg_conn.Model(model).Where(condition).Count(&count).Error
 	if err != nil {
 		// error
 		return false, err
@@ -91,9 +91,9 @@ func ExistsDB(c *gin.Context, pg_conn *gorm.DB, condition interface{}) (bool, er
 }
 
 // returns the number of rows with the given condition
-func CountDB(c *gin.Context, pg_conn *gorm.DB, condition interface{}) (int64, error) {
+func CountDB(c *gin.Context, pg_conn *gorm.DB, model interface{}, condition interface{}) (int64, error) {
 	var count int64
-	err := pg_conn.Where(condition).Count(&count).Error
+	err := pg_conn.Model(model).Where(condition).Count(&count).Error
 	if err != nil {
 		return 0, err
 	}
