@@ -1,0 +1,24 @@
+---
+name: Lint Code Base
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+jobs:
+  run-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3.1.0
+        with:
+          # Full git history is needed for linting changes
+          fetch-depth: 0
+
+      - name: Lint Code Base
+        uses: github/super-linter@v4.9.7
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          DEFAULT_BRANCH: "main"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
