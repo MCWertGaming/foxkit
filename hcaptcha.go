@@ -3,7 +3,7 @@ package foxkit
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strings"
 	"time"
@@ -27,7 +27,7 @@ func (hresp *HCaptchaResponse) Get(secret, response *string) error {
 	defer resp.Body.Close()
 
 	// parse response body
-	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	bodyBytes, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return err
 	}
