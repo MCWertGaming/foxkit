@@ -13,4 +13,4 @@ jobs:
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         issue-message: "Thank you for opening you first Issue! Please make sure that you have read the Contribution guidelines and the Code of Conduct."
-        pr-message: "Thank you for openning your first Pull-Request! Please make sure that you have read the Contribution guidelines and the Code of Conduct."
+        pr-message: "Thank you for opening your first Pull-Request! Please make sure that you have read the Contribution guidelines and the Code of Conduct."
