@@ -21,3 +21,32 @@ func TestUUIDPool(t *testing.T) {
 		t.Errorf("UUID not 37 characters long, instead %d", strings.Count(uuid, ""))
 	}
 }
+
+func TestUUIDCollision(t *testing.T) {
+	if GetUUID() == GetUUID() {
+		t.Error("Two UUIDs collided, this should be impossible")
+	} else if GetUUID() == GetUUID() {
+		t.Error("Two UUIDs collided, this should be impossible")
+	} else if GetUUID() == GetUUID() {
+		t.Error("Two UUIDs collided, this should be impossible")
+	} else if GetUUID() == GetUUID() {
+		t.Error("Two UUIDs collided, this should be impossible")
+	} else if GetUUID() == GetUUID() {
+		t.Error("Two UUIDs collided, this should be impossible")
+	}
+}
+
+func TestUUIDPoolCollision(t *testing.T) {
+	SetupUUID()
+	if GetUUID() == GetUUID() {
+		t.Error("Two UUIDs collided, this should be impossible")
+	} else if GetUUID() == GetUUID() {
+		t.Error("Two UUIDs collided, this should be impossible")
+	} else if GetUUID() == GetUUID() {
+		t.Error("Two UUIDs collided, this should be impossible")
+	} else if GetUUID() == GetUUID() {
+		t.Error("Two UUIDs collided, this should be impossible")
+	} else if GetUUID() == GetUUID() {
+		t.Error("Two UUIDs collided, this should be impossible")
+	}
+}
