@@ -23,30 +23,52 @@ func TestUUIDPool(t *testing.T) {
 }
 
 func TestUUIDCollision(t *testing.T) {
-	if GetUUID() == GetUUID() {
+	uuid1 := GetUUID()
+
+	if uuid1 == GetUUID() {
 		t.Error("Two UUIDs collided, this should be impossible")
-	} else if GetUUID() == GetUUID() {
+	}
+	uuid1 = GetUUID()
+	if uuid1 == GetUUID() {
 		t.Error("Two UUIDs collided, this should be impossible")
-	} else if GetUUID() == GetUUID() {
+	}
+	uuid1 = GetUUID()
+	if uuid1 == GetUUID() {
 		t.Error("Two UUIDs collided, this should be impossible")
-	} else if GetUUID() == GetUUID() {
+	}
+	uuid1 = GetUUID()
+	if uuid1 == GetUUID() {
 		t.Error("Two UUIDs collided, this should be impossible")
-	} else if GetUUID() == GetUUID() {
+	}
+	uuid1 = GetUUID()
+	if uuid1 == GetUUID() {
 		t.Error("Two UUIDs collided, this should be impossible")
 	}
 }
 
 func TestUUIDPoolCollision(t *testing.T) {
+	// setup uuid pool
 	SetupUUID()
-	if GetUUID() == GetUUID() {
+
+	uuid1 := GetUUID()
+
+	if uuid1 == GetUUID() {
 		t.Error("Two UUIDs collided, this should be impossible")
-	} else if GetUUID() == GetUUID() {
+	}
+	uuid1 = GetUUID()
+	if uuid1 == GetUUID() {
 		t.Error("Two UUIDs collided, this should be impossible")
-	} else if GetUUID() == GetUUID() {
+	}
+	uuid1 = GetUUID()
+	if uuid1 == GetUUID() {
 		t.Error("Two UUIDs collided, this should be impossible")
-	} else if GetUUID() == GetUUID() {
+	}
+	uuid1 = GetUUID()
+	if uuid1 == GetUUID() {
 		t.Error("Two UUIDs collided, this should be impossible")
-	} else if GetUUID() == GetUUID() {
+	}
+	uuid1 = GetUUID()
+	if uuid1 == GetUUID() {
 		t.Error("Two UUIDs collided, this should be impossible")
 	}
 }
