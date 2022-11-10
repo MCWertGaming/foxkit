@@ -85,13 +85,14 @@ func BindJson(c *gin.Context, obj interface{}, appName string) bool {
 }
 
 // Binds an URI to the given struct, sets 400 on false
-func BindURI(c *gin.Context, obj interface{}, appName string) {
+func BindURI(c *gin.Context, obj interface{}, appName string) bool {
 	// bind URI and handle error
 	if err := c.BindUri(obj); err != nil {
 		c.AbortWithStatus(http.StatusBadRequest)
 		LogError("FoxBow", err)
-		return
+		return false
 	}
+	return true
 }
 
 // returns true if an error happened, sets the status to 500 if true
